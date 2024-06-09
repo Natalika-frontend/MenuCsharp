@@ -72,7 +72,7 @@ namespace MenuCsharp
         public Student(string p1, string p2, string p3, int p4, string p5, int p6)
         {
             nzk = p1; fio = p2;
-            if (p3 == "m" || p3 == "w") pol = p3; else pol = "";
+            if (p3 == "м" || p3 == "ж") pol = p3; else pol = "";
             if (p4 > 0 && p4 < 7) kurs = p4; else kurs = 0;
             spec = p5;
             if (p6 > 0) n_room = p6; else n_room = 0;
@@ -98,7 +98,7 @@ namespace MenuCsharp
         public string Pol
         {
             get { return pol; }
-            set { if (value == "m" || value == "w") pol = value; }
+            set { if (value == "м" || value == "ж") pol = value; }
         }
 
         public int Kurs

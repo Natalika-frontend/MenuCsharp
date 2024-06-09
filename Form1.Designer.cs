@@ -53,6 +53,8 @@
             listBox1 = new ListBox();
             label6 = new Label();
             panel1 = new Panel();
+            comboBox7 = new ComboBox();
+            label15 = new Label();
             button5 = new Button();
             button4 = new Button();
             button3 = new Button();
@@ -280,6 +282,8 @@
             // panel1
             // 
             panel1.BackColor = SystemColors.ControlLight;
+            panel1.Controls.Add(comboBox7);
+            panel1.Controls.Add(label15);
             panel1.Controls.Add(button5);
             panel1.Controls.Add(button4);
             panel1.Controls.Add(button3);
@@ -298,6 +302,25 @@
             panel1.Size = new Size(541, 160);
             panel1.TabIndex = 14;
             // 
+            // comboBox7
+            // 
+            comboBox7.FormattingEnabled = true;
+            comboBox7.Location = new Point(81, 125);
+            comboBox7.Name = "comboBox7";
+            comboBox7.Size = new Size(72, 23);
+            comboBox7.TabIndex = 14;
+            comboBox7.SelectedIndexChanged += comboBox7_SelectedIndexChanged;
+            comboBox7.MouseEnter += comboBox7_MouseEnter;
+            // 
+            // label15
+            // 
+            label15.AutoSize = true;
+            label15.Location = new Point(12, 128);
+            label15.Name = "label15";
+            label15.Size = new Size(54, 15);
+            label15.TabIndex = 13;
+            label15.Text = "Комната";
+            // 
             // button5
             // 
             button5.Location = new Point(381, 92);
@@ -315,6 +338,7 @@
             button4.TabIndex = 11;
             button4.Text = "Сохранить";
             button4.UseVisualStyleBackColor = true;
+            button4.Click += button4_Click;
             // 
             // button3
             // 
@@ -327,7 +351,7 @@
             // 
             // textBox5
             // 
-            textBox5.Location = new Point(81, 123);
+            textBox5.Location = new Point(81, 97);
             textBox5.Name = "textBox5";
             textBox5.Size = new Size(72, 23);
             textBox5.TabIndex = 9;
@@ -336,7 +360,8 @@
             // 
             comboBox3.AutoCompleteCustomSource.AddRange(new string[] { "1", "2", "3", "4", "5", "6" });
             comboBox3.FormattingEnabled = true;
-            comboBox3.Location = new Point(81, 94);
+            comboBox3.Items.AddRange(new object[] { "1", "2", "3", "4", "5", "6" });
+            comboBox3.Location = new Point(262, 68);
             comboBox3.Name = "comboBox3";
             comboBox3.Size = new Size(54, 23);
             comboBox3.TabIndex = 8;
@@ -345,6 +370,7 @@
             // 
             comboBox2.AutoCompleteCustomSource.AddRange(new string[] { "м", "ж" });
             comboBox2.FormattingEnabled = true;
+            comboBox2.Items.AddRange(new object[] { "м", "ж" });
             comboBox2.Location = new Point(81, 68);
             comboBox2.Name = "comboBox2";
             comboBox2.Size = new Size(56, 23);
@@ -367,7 +393,7 @@
             // label11
             // 
             label11.AutoSize = true;
-            label11.Location = new Point(12, 126);
+            label11.Location = new Point(12, 100);
             label11.Name = "label11";
             label11.Size = new Size(35, 15);
             label11.TabIndex = 4;
@@ -376,7 +402,7 @@
             // label10
             // 
             label10.AutoSize = true;
-            label10.Location = new Point(11, 97);
+            label10.Location = new Point(192, 71);
             label10.Name = "label10";
             label10.Size = new Size(33, 15);
             label10.TabIndex = 3;
@@ -506,6 +532,7 @@
             button7.TabIndex = 18;
             button7.Text = "Добавить";
             button7.UseVisualStyleBackColor = true;
+            button7.Click += button7_Click;
             // 
             // button8
             // 
@@ -515,6 +542,7 @@
             button8.TabIndex = 19;
             button8.Text = "Удалить";
             button8.UseVisualStyleBackColor = true;
+            button8.Click += button8_Click;
             // 
             // Form1
             // 
@@ -605,5 +633,7 @@
         private TextBox textBox7;
         private Button button7;
         private Button button8;
+        private Label label15;
+        private ComboBox comboBox7;
     }
 }

@@ -33,7 +33,7 @@ namespace MenuCsharp
             }
         }
 
-        class FioRoomCompareAsc : IComparer<Student>
+        class FioCompareAsc : IComparer<Student>
         {
             public int Compare(Student o1, Student o2)
             {
@@ -43,12 +43,12 @@ namespace MenuCsharp
             }
         }
 
-        int find_Room(int p_nk)
+        int find_Room(int p_nk, List<Room> m)
         {
             int vz = -1;
-            for (int i = 0; i < MRoom.Count; i++)
+            for (int i = 0; i < m.Count; i++)
             {
-                if (MRoom[i].Nomer == p_nk)
+                if (m[i].Nomer == p_nk)
                 {
                     vz = i; break;
                 }
@@ -56,51 +56,21 @@ namespace MenuCsharp
             return vz;
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        int find_Stud(string p_nzk, List<Student> m)
         {
-            StreamReader sr = new StreamReader(name_f);
-
-            string s; int fl = 0;
-            int p_nk, p_max, p_kurs;
-            string p_nzk = "", p_fio = "", p_pol = "", p_spec = "";
-
-            
-            while (sr.EndOfStream != true) 
+            int vz = -1;
+            for (int i = 0; i < m.Count; i++)
             {
-                s = sr.ReadLine();
-                if (fl == 0) {
-                    p_name = s.Substring(0, 20);
-                    p_adr = s.Substring(20, 30);
-                    p_Max_kol = Convert.ToInt16(s.Substring(50));
-                    fl = 1;
-                }
-                else {
-                    p_nk = Convert.ToInt16(s.Substring(0, 3));
-                    p_max = Convert.ToInt16(s.Substring(4, 2));
-                    p_nzk = s.Substring(7, 7);
-                    p_fio = s.Substring(15, 30);
-                    p_pol = s.Substring(46, 1);
-                    p_kurs = Convert.ToInt16(s.Substring(48, 1));
-                    p_spec = s.Substring(50);
-
-                    Student o = new Student(p_nzk, p_fio, p_pol, p_kurs, p_spec, p_nk);
-                    MStudent.Add(o);
-
-
-                    int ind_room = find_Room(p_nk);
-                    if (ind_room < 0)
-                    {
-                        Room r = new Room(p_nk, p_max, 1);
-                        MRoom.Add(r);
-                    }
-                    else
-                    {
-                        MRoom[ind_room].incT();
-                    }
+                if (m[i].Nzk == p_nzk)
+                {
+                    vz = i; break;
                 }
             }
-            sr.Close();
+            return vz;
+        }
 
+        private void refreshRoom()
+        {
             NomerRoomCompareAsc v1 = new NomerRoomCompareAsc();
             MRoom.Sort(v1);
 
@@ -112,8 +82,11 @@ namespace MenuCsharp
                 dataGridView1.Rows[i].Cells[2].Value = MRoom[i].T;
             }
             dataGridView1.Refresh();
+        }
 
-            FioRoomCompareAsc v2 = new FioRoomCompareAsc();
+        private void refreshStud()
+        {
+            FioCompareAsc v2 = new FioCompareAsc();
             MStudent.Sort(v2);
 
             dataGridView2.RowCount = MStudent.Count;
@@ -128,9 +101,181 @@ namespace MenuCsharp
                 dataGridView2.Rows[i].Cells[6].Value = MStudent[i].N_room;
             }
             dataGridView2.Refresh();
+        }
 
-            textBox1.Text = p_name; 
+        private void button1_Click(object sender, EventArgs e)
+        {
+            StreamReader sr = new StreamReader(name_f);
+
+            string s; int fl = 0;
+            int p_nk, p_max, p_kurs;
+            string p_nzk = "", p_fio = "", p_pol = "", p_spec = "";
+
+
+            while (sr.EndOfStream != true)
+            {
+                s = sr.ReadLine();
+                if (fl == 0)
+                {
+                    p_name = s.Substring(0, 20);
+                    p_adr = s.Substring(20, 30);
+                    p_Max_kol = Convert.ToInt16(s.Substring(50));
+                    fl = 1;
+                }
+                else
+                {
+                    p_nk = Convert.ToInt16(s.Substring(0, 3));
+                    p_max = Convert.ToInt16(s.Substring(4, 2));
+                    p_nzk = s.Substring(7, 7);
+                    p_fio = s.Substring(15, 30);
+                    p_pol = s.Substring(46, 1);
+                    p_kurs = Convert.ToInt16(s.Substring(48, 1));
+                    p_spec = s.Substring(50);
+
+                    Student o = new Student(p_nzk, p_fio, p_pol, p_kurs, p_spec, p_nk);
+                    MStudent.Add(o);
+
+
+                    int ind_room = find_Room(p_nk, MRoom);
+                    if (ind_room < 0)
+                    {
+                        Room r = new Room(p_nk, p_max, 1);
+                        MRoom.Add(r);
+                    }
+                    else
+                    {
+                        MRoom[ind_room].incT();
+                    }
+                }
+            }
+            sr.Close();
+
+            refreshRoom();
+            refreshStud();
+
+            textBox1.Text = p_name;
             textBox2.Text = p_adr;
+        }
+
+        private void button7_Click(object sender, EventArgs e)
+        {
+            if (textBox6.Text != null && textBox7.Text != null && textBox7.Text != "")
+            {
+                int p_nk, p_max;
+                p_nk = Convert.ToInt16(textBox6.Text);
+                p_max = Convert.ToInt16(textBox7.Text);
+                if (p_nk > 0 && p_max > 0 && p_max < 41)
+                {
+                    if (find_Room(p_nk, MRoom) < 0)
+                    {
+                        Room o = new Room(p_nk, p_max);
+                        MRoom.Add(o);
+                        refreshRoom();
+                        textBox6.Text = "";
+                        textBox7.Text = "";
+                    }
+
+                }
+            }
+        }
+
+        private void button8_Click(object sender, EventArgs e)
+        {
+            if (textBox6.Text != null && (textBox7.Text == null || textBox7.Text == ""))
+            {
+                int p_nk;
+                p_nk = Convert.ToUInt16(textBox6.Text);
+                int ind_nom = find_Room(p_nk, MRoom);
+                if (ind_nom > 0)
+                {
+                    if (MRoom[ind_nom].T == 0)
+                    {
+                        MRoom.RemoveAt(ind_nom);
+                        refreshRoom();
+                        textBox6.Text = "";
+                    }
+                }
+            }
+        }
+
+        private void comboBox7_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void comboBox7_MouseEnter(object sender, EventArgs e)
+        {
+            if (comboBox2.Text != null)
+            {
+                string p_pol = comboBox2.Text;
+                comboBox7.Items.Clear();
+                List<Room> m1 = new List<Room>();
+                for (int i = 0; i < MRoom.Count; i++)
+                {
+                    if (MRoom[i].T < MRoom[i].Nmax)
+                    {
+                        if (MRoom[i].T == 0)
+                        {
+                            m1.Add(MRoom[i]);
+                        }
+                        else
+                        {
+                            for (int j = 0; j < MStudent.Count; j++)
+                            {
+                                if (MStudent[j].N_room == MRoom[i].Nomer)
+                                {
+                                    if (MStudent[j].Pol == p_pol)
+                                    {
+                                        if (find_Room(MStudent[j].N_room, m1) < 0)
+                                        {
+                                            m1.Add(MRoom[i]);
+                                        }
+
+                                    }
+                                }
+                            }
+                        }
+                    }
+
+                }
+                if (m1.Count > 0)
+                {
+                    for (int i = 0; i < m1.Count; i++)
+                    {
+                        comboBox7.Items.Add(m1[i].Nomer);
+                    }
+                }
+            }
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            if (textBox3.Text != null && textBox3.Text != "" && textBox4.Text != null && textBox4.Text != "" && textBox5.Text != null && textBox5.Text != "" && comboBox2.Text != null && comboBox2.Text != "" && comboBox3.Text != null && comboBox3.Text != "" && comboBox7.Text != null && comboBox7.Text != "")
+            {
+                int n_room, p_kurs;
+                string p_nzk, p_fio, p_pol, p_spec;
+                p_nzk = textBox3.Text;
+                p_fio = textBox4.Text;
+                p_spec = textBox5.Text;
+                n_room = Convert.ToInt16(comboBox7.Text);
+                p_pol = comboBox7.Text;
+                p_kurs = Convert.ToInt16(comboBox3.Text);
+                if (find_Stud(p_nzk, MStudent) < 0) 
+                {
+                    Student o = new Student(p_nzk, p_fio, p_pol, p_kurs, p_spec, n_room);
+                    MStudent.Add(o);
+                    refreshStud();
+                    int ind_nom = find_Room(n_room, MRoom);
+                    MRoom[ind_nom].incT();
+                    refreshRoom();
+                    textBox3.Text = "";
+                    textBox4.Text = "";
+                    textBox5.Text = "";
+                    comboBox7.Text = "";
+                    comboBox7.Items.Clear();
+                }
+            }
         }
     }
 }
+
