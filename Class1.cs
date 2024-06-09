@@ -20,9 +20,15 @@ namespace MenuCsharp
 
         public Room(int p_nom, int p_max)
         {
-            nomer = p_nom; 
-            if (p_max > 0 && p_max < 41) nMax = p_max; 
+            nomer = p_nom;
+            if (p_max > 0 && p_max < 41) nMax = p_max; else nMax = 4;
             t = 0;
+        }
+        public Room(int p_nom, int p_max, int tek)
+        {
+            nomer = p_nom;
+            if (p_max > 0 && p_max < 41) nMax = p_max; else nMax = 4;
+            if (tek > 0 && tek <= nMax) t = tek; else t = 0;
         }
 
         public Room(Room o)
@@ -41,6 +47,13 @@ namespace MenuCsharp
             get { return nMax; }
             set { nMax = value; }
         }
+
+        public int T
+        {
+            get { return t; }
+        }
+
+        public void incT() { t++; }
     }
 
     class Student
