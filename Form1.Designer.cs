@@ -250,6 +250,7 @@
             comboBox1.Name = "comboBox1";
             comboBox1.Size = new Size(68, 23);
             comboBox1.TabIndex = 10;
+            comboBox1.Click += comboBox1_Click;
             // 
             // button2
             // 
@@ -259,14 +260,15 @@
             button2.TabIndex = 11;
             button2.Text = "Применить";
             button2.UseVisualStyleBackColor = true;
+            button2.Click += button2_Click;
             // 
             // listBox1
             // 
+            listBox1.Font = new Font("Courier New", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 204);
             listBox1.FormattingEnabled = true;
-            listBox1.ItemHeight = 15;
             listBox1.Location = new Point(676, 180);
             listBox1.Name = "listBox1";
-            listBox1.Size = new Size(541, 109);
+            listBox1.Size = new Size(541, 100);
             listBox1.TabIndex = 12;
             // 
             // label6
@@ -329,6 +331,7 @@
             button5.TabIndex = 12;
             button5.Text = "Удалить";
             button5.UseVisualStyleBackColor = true;
+            button5.Click += button5_Click;
             // 
             // button4
             // 
@@ -348,6 +351,7 @@
             button3.TabIndex = 10;
             button3.Text = "Найти";
             button3.UseVisualStyleBackColor = true;
+            button3.Click += button3_Click;
             // 
             // textBox5
             // 
@@ -509,6 +513,7 @@
             comboBox4.Name = "comboBox4";
             comboBox4.Size = new Size(89, 23);
             comboBox4.TabIndex = 0;
+            comboBox4.Click += comboBox4_Click;
             // 
             // textBox6
             // 

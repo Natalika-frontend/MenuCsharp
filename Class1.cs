@@ -54,6 +54,8 @@ namespace MenuCsharp
         }
 
         public void incT() { t++; }
+
+        public void decT() { t--; }
     }
 
     class Student
